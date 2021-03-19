@@ -2,10 +2,9 @@
 #include <regex>
 #include <fstream>
 
-Document::Document(): m_linePointer(1) {}
+Document::Document(): m_linePointer(-1) {}
 
-Document::Document(string fileName): Document(){
-  
+Document::Document(const string& fileName): Document(){
     ifstream infile(fileName);
     string line;
     while (getline(infile, line)){
@@ -14,13 +13,13 @@ Document::Document(string fileName): Document(){
 }
 
 void Document::setToRealIndex(size_t index){
-    m_linePointer = index-1;
+    //m_linePointer = index-1;
 }
 void Document::moveToLine(size_t line){
-    if(line <= m_data.size())
-        setToRealIndex(line);
+    if(line < m_data.size())
+        m_linePointer = line;
     else
-        throw "Can't move to line greater thrn document size\n" ;
+        throw "Can't move to line greater then document size\n" ;
 }
 void Document::moveForward(int amount){
     if(m_linePointer + amount > 0)
@@ -29,10 +28,10 @@ void Document::moveForward(int amount){
         throw "Cant move to line smaller then 1\n";
 }
 void Document::moveToLastLine(){
-    moveToLine(m_data.size());
+    moveToLine(m_data.size()-1);
 }
 void Document::addLineAfter(string s){
-    m_data.insert(m_data.begin() + m_linePointer + 1, s);
+    m_data.insert(m_data.begin() + m_linePointer, s);
     moveForward(1);
 }
 void Document::addLineBefoer(string s){
@@ -62,6 +61,7 @@ void Document::replaceFirst(string oldString, string newString){
             newString, 
             regex_constants::format_first_only);
 }
+
 void Document::concatCurrentWithNext(){
     if(m_linePointer >= m_data.size()-1)
         throw "Can't connect last line becous their is no next one\n";

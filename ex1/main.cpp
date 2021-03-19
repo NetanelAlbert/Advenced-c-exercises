@@ -1,30 +1,32 @@
-#include <iostream>
-#include <vector>
-using namespace std;
-
-void printVec(vector<int> vec){
-    for(int i : vec){
-        cout << i << " ";
-    }
-    cout << endl;
-}
+#include "Editor.h"
 
 
-int main(){
-    vector<int> vec(5, 1);
+
+
+int main(int argc, char* argv[]){
+    Editor* editor;
+    switch (argc)
+    {
+    case 1:
+        editor = new Editor;
+        break;
     
-    printVec(vec);
+    case 2:
+        editor = new Editor(argv[1]);
+        break;
+    
+    default:
+        cout << "Too many arguments" << endl;
+        exit(1);
+    }
 
-    vec.insert(vec.begin()+2, 5);
-
-    printVec(vec);
-
-    vec.at(5) = 6;
-
-    printVec(vec);
-
-    vec.erase(vec.begin()+1);
-
-    printVec(vec);
-
+    editor->printVec();
+    try{
+        editor->loop();
+    }
+    catch(char const* s){
+        cerr << "error: " << s << '\n';
+    }
+    
+    return 0;
 }

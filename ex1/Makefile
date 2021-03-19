@@ -6,8 +6,6 @@ CXXFLAGS=-std=c++2a
 HEADERS=Document.h Editor.h
 OBJECTS=Document.o Editor.o
 
-run: main
-	./$^
 
 main: main.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o main
@@ -16,4 +14,4 @@ main: main.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 clean:
-	rm -f *.o demo test
+	rm -f *.o main

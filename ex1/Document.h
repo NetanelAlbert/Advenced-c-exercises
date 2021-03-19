@@ -9,7 +9,7 @@ private:
     
 public:
     Document();
-    Document(string fileName);
+    Document(const string& fileName);
     void moveToLine(size_t line);
     void moveForward(int amount);
     void moveToLastLine();
@@ -22,6 +22,12 @@ public:
     void concatCurrentWithNext();
     void writTofile(string fileName);
 
-
+    void printVec(){
+        cout << "line pointer = " << m_linePointer << endl;
+        for(const string& s : m_data){
+            cout << s << endl;
+        }
+        cout << endl;
+    }
 };
 
