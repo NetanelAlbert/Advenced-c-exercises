@@ -12,24 +12,19 @@ void Editor::loop(){
     regex findReg("/(.*)/");
     regex writToFileReg("w (.*)");
     
-    while (true){
-        
+    while (true){        
         getline(cin, command);
-        cout << "command: " << command << endl;
         
         if(regex_match(command, addReg)){ // "+2", "-13"
             const int amount = stoi(command);
-            cout << "->adding " << amount << endl;
             m_doc.moveForward(amount);
         
-        } else if (regex_match(command, numReg)){
+        } else if (regex_match(command, numReg)){ // "1", "22"
             const int line = stoi(command);
-            cout << "->moving to " << line << endl;
-            m_doc.moveToLine(line);
+            m_doc.moveToLine(line-1);
         
         } else if (command == "$"){
             m_doc.moveToLastLine();
-            cout << "->moving to last line" << endl;
 
         } else if (command == "a"){ // add line/s after
             string line;
@@ -38,7 +33,6 @@ void Editor::loop(){
                 m_doc.addLineAfter(line);
                 getline(cin, line);
             } while (line != ".");
-            m_doc.moveForward(-1);
 
         } else if (command == "i"){ // add line/s before
             string line;
@@ -54,7 +48,7 @@ void Editor::loop(){
             string line;
             getline(cin, line);
             do{
-                m_doc.addLineBefoer(line);
+                m_doc.addLineAfter(line);
                 getline(cin, line);
             } while (line != ".");
             m_doc.moveForward(-1);
@@ -85,10 +79,6 @@ void Editor::loop(){
         } else {
             cout << "command \"" << command << "\" is unknone." << endl;    
         }
-
-        
-        printVec();
-
     }
     
 }

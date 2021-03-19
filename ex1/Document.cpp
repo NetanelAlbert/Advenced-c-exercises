@@ -12,17 +12,17 @@ Document::Document(const string& fileName): Document(){
     }
 }
 
-void Document::setToRealIndex(size_t index){
+void Document::setToRealIndex(int index){
     //m_linePointer = index-1;
 }
-void Document::moveToLine(size_t line){
+void Document::moveToLine(int line){
     if(line < m_data.size())
         m_linePointer = line;
     else
         throw "Can't move to line greater then document size\n" ;
 }
 void Document::moveForward(int amount){
-    if(m_linePointer + amount > 0)
+    if(m_linePointer + amount >= 0)
         moveToLine(m_linePointer+amount);
     else
         throw "Cant move to line smaller then 1\n";
@@ -31,7 +31,7 @@ void Document::moveToLastLine(){
     moveToLine(m_data.size()-1);
 }
 void Document::addLineAfter(string s){
-    m_data.insert(m_data.begin() + m_linePointer, s);
+    m_data.insert(m_data.begin() + m_linePointer+1, s);
     moveForward(1);
 }
 void Document::addLineBefoer(string s){
@@ -43,8 +43,8 @@ void Document::replaceCurrentLine(string s){
 }
 void Document::deleteCurrentLine(){
     m_data.erase(m_data.begin() + m_linePointer);
-    if(m_linePointer >= 0)
-        --m_linePointer;
+    // if(m_linePointer >= 0)
+         --m_linePointer;
 }
 void Document::findAndMoveTo(string s){
     for(size_t i = (m_linePointer+1)%m_data.size(); i != m_linePointer; i = (i+1)%m_data.size()){

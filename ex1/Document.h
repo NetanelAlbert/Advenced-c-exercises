@@ -4,13 +4,13 @@ using namespace std;
 class Document{
 private:
     vector<string> m_data;
-    size_t m_linePointer;
-    void setToRealIndex(size_t index);
+    int m_linePointer;
+    void setToRealIndex(int index);
     
 public:
     Document();
     Document(const string& fileName);
-    void moveToLine(size_t line);
+    void moveToLine(int line);
     void moveForward(int amount);
     void moveToLastLine();
     void addLineAfter(string s);
@@ -21,13 +21,5 @@ public:
     void replaceFirst(string oldString, string newString);
     void concatCurrentWithNext();
     void writTofile(string fileName);
-
-    void printVec(){
-        cout << "line pointer = " << m_linePointer << endl;
-        for(const string& s : m_data){
-            cout << s << endl;
-        }
-        cout << endl;
-    }
 };
 

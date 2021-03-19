@@ -1,8 +1,5 @@
 #include "Editor.h"
 
-
-
-
 int main(int argc, char* argv[]){
     Editor* editor;
     switch (argc)
@@ -16,16 +13,16 @@ int main(int argc, char* argv[]){
         break;
     
     default:
-        cout << "Too many arguments" << endl;
+        cerr << "Too many arguments" << endl;
         exit(1);
     }
 
-    editor->printVec();
     try{
         editor->loop();
     }
     catch(char const* s){
         cerr << "error: " << s << '\n';
+        exit(1);
     }
     
     return 0;
