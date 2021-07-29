@@ -8,18 +8,27 @@ void SymbolTable::initReserved()
     while (inputFile >> text)
     {
         inputFile >> num;
-        insertToken(text, make_shared<Token>(num, text));
+        insertToken(text, make_shared<Token>(static_cast<tokenType>(num), text));
     }
     
 }
+
 shared_ptr<Token> SymbolTable::lookupToken(string text)
 {
-    return symMap.at(text);
+    map<string,shared_ptr<Token>>::const_iterator it = symMap.find(text);
+    if ( it == symMap.end() ) {
+        return nullptr;
+    }
+    else {
+        return it->second;
+    }
 }
+
 void SymbolTable::insertToken(string text, shared_ptr<Token> tokenp)
 {
     symMap.insert({text, tokenp});
 }
+
 void SymbolTable::xref()
 {
     for(auto t : symMap)
